@@ -11,15 +11,24 @@
       <ul class="bank_area">
         <li class="bank01">
           <span class="graph"></span>
-          <div class="bank_box"><span>100,000</span>P-BANK</div>
+          <div class="bank_box">
+            <span class="curent_saved">86,540</span>
+            <span>100,000</span><span>P-BANK</span>
+          </div>
         </li>
         <li class="bank02">
           <span class="graph"></span>
-          <div class="bank_box"><span>100,000</span>P-BANK</div>
+          <div class="bank_box">
+            <span class="curent_saved">86,540</span>
+            <span>100,000</span><span>P-BANK</span>
+          </div>
         </li>
         <li class="bank03">
           <span class="graph"></span>
-          <div class="bank_box"><span>100,000</span>P-BANK</div>
+          <div class="bank_box">
+            <span class="curent_saved">86,540</span>
+            <span>100,000</span><span>P-BANK</span>
+          </div>
         </li>
       </ul>
       <div class="withdrawal">
@@ -28,7 +37,7 @@
           <li>bank02</li>
           <li>bank03</li>
         </ul>
-        <input type="text" placeholder="出金">
+        <input type="text" placeholder="出金" />
       </div>
     </main>
     <aside><div>直近の履歴（10件くらい）</div></aside>
@@ -37,8 +46,8 @@
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
 
 <style lang="scss">
@@ -77,11 +86,13 @@ nav {
   padding-top: 20px;
   border-radius: 50px;
   background-color: #00552e;
-  background-image:
-    linear-gradient(rgba(255,255,255,.5) 2px, transparent 2px),
-    linear-gradient(90deg, rgba(255,255,255,.5) 2px, transparent 2px),
-    linear-gradient(rgba(255,255,255,.28) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.28) 1px, transparent 1px);
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5) 2px,
+      transparent 2px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
+    linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
   display: flex;
@@ -97,15 +108,32 @@ nav {
       z-index: 3;
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
-      background: rgba(255,255,255,0.4);
+      background: rgba(255, 255, 255, 0.4);
       border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       position: relative;
       display: block;
       margin: 0 auto;
       color: #fff;
       text-align: center;
-      padding-top: 200px;
+      .curent_saved {
+        margin-top: 30px;
+        font-size: 28px;
+        font-weight: bold;
+        color: transparent;
+        background: linear-gradient(
+          0deg,
+          #b67b03 0%,
+          #daaf08 50%,
+          #fee9a0 70%,
+          #daaf08 85%,
+          #b67b03 90% 100%
+        );
+        -webkit-background-clip: text;
+      }
+      span {
+        display: block;
+      }
     }
     .graph {
       width: 180px;
