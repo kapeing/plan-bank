@@ -10,10 +10,11 @@
     <main>
       <ul class="bank_area">
         <li class="bank01">
-          <span class="graph"></span>
+          <span class="graph" :style="currentSavedHeight"></span>
           <div class="bank_box">
-            <span class="curent_saved">{{currentSaved}}</span>
-            <span>100,000</span><span>P-BANK</span>
+            <span class="curent_saved">{{ currentSaved }}</span>
+            <span>{{ targetSaved }}</span
+            ><span>P-BANK</span>
           </div>
         </li>
         <li class="bank02">
@@ -45,11 +46,25 @@
 </template>
 
 <script>
+const TAGETSAVEDHEIGHT = 250
+
 export default {
   name: 'App',
-  data () {
+  data: function () {
     return {
-      currentSaved: '86540'
+      currentSaved: '86540',
+      targetSaved: '100000',
+      height: ''
+    }
+  },
+  mounted: function () {
+    this.height = (this.currentSaved * TAGETSAVEDHEIGHT / this.targetSaved) + 'px'
+  },
+  computed: {
+    currentSavedHeight () {
+      return {
+        'height': this.height
+      }
     }
   }
 }
