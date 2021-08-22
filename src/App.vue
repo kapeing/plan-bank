@@ -12,7 +12,7 @@
         <li class="bank01">
           <span class="graph"></span>
           <div class="bank_box">
-            <span class="curent_saved">86,540</span>
+            <span class="curent_saved">{{currentSaved}}</span>
             <span>100,000</span><span>P-BANK</span>
           </div>
         </li>
@@ -46,8 +46,13 @@
 
 <script>
 export default {
-  name: "App"
-};
+  name: 'App',
+  data () {
+    return {
+      currentSaved: '86540'
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -180,7 +185,7 @@ nav {
     padding: 10px 15px; /*ボックスを大きくする*/
     font-size: 16px;
     border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
+    border: 1px solid #ddd; /*枠線*/
     box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
   }
 }
