@@ -9,26 +9,12 @@
     </nav>
     <main>
       <ul class="bank_area">
-        <li class="bank01">
+        <li class="bank01" v-for="(item, key) in saveItems" :key="key">
           <span class="graph" :style="currentSavedHeight"></span>
           <div class="bank_box">
-            <span class="curent_saved">{{ currentSaved }}</span>
-            <span>{{ targetSaved }}</span
-            ><span>P-BANK</span>
-          </div>
-        </li>
-        <li class="bank02">
-          <span class="graph"></span>
-          <div class="bank_box">
-            <span class="curent_saved">86,540</span>
-            <span>100,000</span><span>P-BANK</span>
-          </div>
-        </li>
-        <li class="bank03">
-          <span class="graph"></span>
-          <div class="bank_box">
-            <span class="curent_saved">86,540</span>
-            <span>100,000</span><span>P-BANK</span>
+            <span class="curent_saved">{{ item.currentSaved }}</span>
+            <span>{{ item.targetSaved }}</span>
+            <span>P-BANK</span>
           </div>
         </li>
       </ul>
@@ -46,25 +32,47 @@
 </template>
 
 <script>
-const TAGETSAVEDHEIGHT = 250
+const TARGET_SAVED_HEIGHT = 250
 
 export default {
   name: 'App',
   data: function () {
     return {
-      currentSaved: '86540',
-      targetSaved: '100000',
-      height: ''
+      saveItems: [
+        {
+          currentSaved: '86540',
+          targetSaved: '100000'
+        },
+        {
+          currentSaved: '500',
+          targetSaved: '10000'
+        },
+        {
+          currentSaved: '100000',
+          targetSaved: '200000'
+        }
+      ],
+      heights: []
     }
   },
   mounted: function () {
-    this.height = (this.currentSaved * TAGETSAVEDHEIGHT / this.targetSaved) + 'px'
+    let height = ''
+    for (let i = 0; i < 3; i++) {
+      height = this.graphHeight(this.saveItems[i].currentSaved, this.saveItems[i].targetSaved)
+      this.heights.push(height)
+    }
+    console.log(this.heights)
   },
   computed: {
     currentSavedHeight () {
       return {
-        'height': this.height
+        'height': this.height_0
       }
+    }
+  },
+  methods: {
+    graphHeight (currentSaved, targetSaved) {
+      return (currentSaved * TARGET_SAVED_HEIGHT / targetSaved) + 'px'
     }
   }
 }
@@ -141,14 +149,7 @@ nav {
         font-size: 28px;
         font-weight: bold;
         color: transparent;
-        background: linear-gradient(
-          0deg,
-          #b67b03 0%,
-          #daaf08 50%,
-          #fee9a0 70%,
-          #daaf08 85%,
-          #b67b03 90% 100%
-        );
+        background: #fff;
         -webkit-background-clip: text;
       }
       span {
