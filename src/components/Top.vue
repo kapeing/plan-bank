@@ -5,7 +5,7 @@
         <span class="graph" :style="{height: heights[key]}"></span>
         <div class="bank_box">
           <span class="curent_saved">{{ item.currentSaved }}</span>
-          <span>{{ item.targetSaved }}</span>
+          <span>/{{ item.targetSaved }}</span>
           <span>P-BANK</span>
         </div>
       </li>
@@ -55,7 +55,6 @@ export default {
       height = this.graphHeight(this.saveItems[i].currentSaved, this.saveItems[i].targetSaved)
       this.heights.push(height)
     }
-    console.log(this.heights)
   },
   methods: {
     graphHeight (currentSaved, targetSaved) {
