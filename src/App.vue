@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import 'normalize.css'
 
 export default {
   name: 'App'
@@ -19,7 +20,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./css/destyle.css";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,6 +34,7 @@ html {
     height: 100%;
   }
 }
+li{list-style: none;}
 section {
   height: 100%;
   background: #fafafa;
