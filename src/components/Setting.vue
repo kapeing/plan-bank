@@ -3,43 +3,43 @@
   <fieldset>
     <div class="whiich_saved_button">
       <label for="which_saved" v-for="(color, i) in pBankColorList" :key="i">
-        <input type="radio" name="which_saved" :value="color" :checked="radioButtonChecked(i)">{{ color }}
+        <input type="radio" id="which_saved" :value="color" v-model="colors">{{ color }}
       </label>
     </div>
   </fieldset>
   <fieldset>
     <label for="target_saved">目標金額</label>
-    <input type="number" name="target_saved">
+    <input type="number" id="target_saved" v-model="target_saved">
   </fieldset>
   <fieldset>
     <label for="saved_name">貯金名</label>
-    <input type="text" name="saved_name">
+    <input type="text" id="saved_name" v-model="saved_name">
   </fieldset>
   <fieldset>
     <label for="unit_repetition">繰り返しの単位</label>
-    <select name="unit_repetition">
-      <option :value="unitEn" v-for="(unitJp, unitEn, i) in unitRepetitionList"  :key="i" :selected="selectBoxSelected(unitRepetitionList.monthly, unitJp)">{{ unitJp }}</option>
+    <select id="unit_repetition" v-model="unit_repetition">
+      <option :value="unitEn" v-for="(unitJp, unitEn, i) in unitRepetitionList"  :key="i">{{ unitJp }}</option>
     </select>
     <div class="week_repetiton">
       <label for="week_repetition" v-for="(weekJp, weekEn, i) in weekdayList"  :key="i">
-        <input type="radio" name="week_repetiton" :value="weekEn" :checked="radioButtonChecked(key)">{{ weekJp }}曜日
+        <input type="radio" id="week_repetiton" :value="weekEn" >{{ weekJp }}曜日
       </label>
     </div>
     <div class="kind_repetition">
       <label for="month_repetition" v-for="(monthJp, monthEn, i) in  monthRepetitionList" :key="i">
-        <input type="radio" name="month_repetiton" :value="monthEn" :checked="radioButtonChecked(i)">{{ monthJp }}
+        <input type="radio" id="month_repetiton" :value="monthEn" v-model="month_repetiton">{{ monthJp }}
       </label>
     </div>
-    <select name="what_day">
+    <select id="what_day">
       <option :value="i" v-for="i in 31" :key="i">{{ i }}</option>
     </select>
-    <select name="what_week">
+    <select id="what_week">
       <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
     </select>
-    <select name="what_number_week">
+    <select id="what_number_week">
       <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
     </select>
-    <select name="what_day_week">
+    <select id="what_day_week">
       <option :value="weekEn" v-for="(weekJp, weekEn, key) in weekdayList" :key="key">{{ weekJp }}曜日</option>
     </select>
   </fieldset>
@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: 'setting',
+  id: 'setting',
   data () {
     return {
       unitRepetitionList: {
@@ -69,16 +69,21 @@ export default {
       monthRepetitionList: {
         day: '日',
         week: '曜日'
-      }
+      },
+      colors: 'pink',
+      target_saved: '100000',
+      saved_name: '電子レンジ',
+      unit_repetition: 'monthly',
+      month_repetiton: '日'
     }
   },
   methods: {
-    radioButtonChecked (key) {
-      return key === 0 ? 'checked' : ''
-    },
-    selectBoxSelected (wishUnitJp, unitJp) {
-      return wishUnitJp === unitJp ? 'selected' : ''
-    }
+    // radioButtonChecked (key) {
+    //   return key === 0 ? 'checked' : ''
+    // },
+    // selectBoxSelected (wishUnitJp, unitJp) {
+    //   return wishUnitJp === unitJp ? 'selected' : ''
+    // }
   }
 }
 </script>
