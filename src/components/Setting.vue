@@ -17,8 +17,8 @@
   </fieldset>
   <fieldset>
     <label for="unit_repetition">繰り返しの単位</label>
-    <select id="unit_repetition" v-model="unit_repetition">
-      <option :value="unitEn" v-for="(unitJp, unitEn, i) in unitRepetitionList"  :key="i">{{ unitJp }}</option>
+    <select id="unit_repetition" v-model="unitRepetition">
+      <option :value="value" v-for="(value , i) in unitRepetitionList"  :key="i">{{ value }}</option>
     </select>
     <div class="week_repetiton">
       <label for="week_repetition" v-for="(weekJp, weekEn, i) in weekdayList"  :key="i">
@@ -30,19 +30,21 @@
         <input type="radio" id="month_repetiton" :value="monthEn" v-model="month_repetiton">{{ monthJp }}
       </label>
     </div>
-    <select id="what_day">
+    <select id="what_day" v-if="unitRepetition === unitRepetitionList[0]">
       <option :value="i" v-for="i in 31" :key="i">{{ i }}</option>
     </select>
-    <select id="what_week">
+    <select id="what_week" v-else-if="unitRepetition === unitRepetitionList[1]">
       <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
     </select>
-    <select id="what_number_week">
-      <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
-    </select>
-    <select id="what_day_week">
-      <option :value="weekEn" v-for="(weekJp, weekEn, key) in weekdayList" :key="key">{{ weekJp }}曜日</option>
-    </select>
-  </fieldset>
+    <template v-else>
+      <select id="what_number_week">
+        <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
+      </select>
+      <select id="what_day_week">
+        <option :value="weekEn" v-for="(weekJp, weekEn, key) in weekdayList" :key="key">{{ weekJp }}曜日</option>
+      </select>
+      </template>
+    </fieldset>
 </form>
 </template>
 
@@ -51,11 +53,7 @@ export default {
   id: 'setting',
   data () {
     return {
-      unitRepetitionList: {
-        daily: '毎日',
-        weekly: '毎週',
-        monthly: '毎月'
-      },
+      unitRepetitionList: [ '毎日', '毎週', '毎月' ],
       weekdayList: {
         sunday: '日',
         monday: '月',
@@ -73,9 +71,11 @@ export default {
       colors: 'pink',
       target_saved: '100000',
       saved_name: '電子レンジ',
-      unit_repetition: 'monthly',
+      unitRepetition: '毎日',
       month_repetiton: '日'
     }
+  },
+  mounted: function () {
   },
   methods: {
     // radioButtonChecked (key) {
