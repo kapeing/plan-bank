@@ -4,7 +4,7 @@
       <ul>
         <li><router-link to="/">つもり貯金</router-link></li>
         <li><router-link to="/setting">貯金箱設定</router-link></li>
-        <li>履歴</li>
+        <li><router-link to="/history">履歴</router-link></li>
       </ul>
     </nav>
     <router-view />
