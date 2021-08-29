@@ -18,33 +18,32 @@
   <fieldset>
     <label for="unit_repetition">繰り返しの単位</label>
     <select id="unit_repetition" v-model="unitRepetition">
-      <option :value="value" v-for="(value , i) in unitRepetitionList"  :key="i">{{ value }}</option>
+      <option :value="unit" v-for="(unit , i) in unitRepetitionList"  :key="i">{{ unit }}</option>
     </select>
-    <div class="week_repetiton">
-      <label for="week_repetition" v-for="(weekJp, weekEn, i) in weekdayList"  :key="i">
-        <input type="radio" id="week_repetiton" :value="weekEn" >{{ weekJp }}曜日
+    <div class="week_repetiton" v-if="unitRepetition === unitRepetitionList[1]">
+      <label for="week_repetition" v-for="(weekday, i) in weekdayList"  :key="i">
+        <input type="radio" id="week_repetiton" :value="weekday" v-model="weekdays">{{ weekday }}曜日
       </label>
     </div>
-    <div class="kind_repetition">
-      <label for="month_repetition" v-for="(monthJp, monthEn, i) in  monthRepetitionList" :key="i">
-        <input type="radio" id="month_repetiton" :value="monthEn" v-model="month_repetiton">{{ monthJp }}
-      </label>
-    </div>
-    <select id="what_day" v-if="unitRepetition === unitRepetitionList[0]">
-      <option :value="i" v-for="i in 31" :key="i">{{ i }}</option>
-    </select>
-    <select id="what_week" v-else-if="unitRepetition === unitRepetitionList[1]">
-      <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
-    </select>
-    <template v-else>
-      <select id="what_number_week">
-        <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
+    <template v-else-if="unitRepetition === unitRepetitionList[2]">
+      <div class="kind_repetition">
+        <label for="month_repetition" v-for="(month, i) in  monthRepetitionList" :key="i">
+          <input type="radio" id="month_repetiton" :value="month" v-model="monthRepetiton">{{ month }}
+        </label>
+      </div>
+      <select id="what_day" v-if="monthRepetiton === monthRepetitionList[0]">
+        <option :value="i" v-for="i in 31" :key="i">{{ i }}</option>
       </select>
-      <select id="what_day_week">
-        <option :value="weekEn" v-for="(weekJp, weekEn, key) in weekdayList" :key="key">{{ weekJp }}曜日</option>
-      </select>
+      <template v-else>
+        <select id="what_week">
+          <option :value="i" v-for="i in 5" :key="i">第{{ i }}週</option>
+        </select>
+        <select id="what_day_week">
+          <option :value="weekEn" v-for="(weekJp, weekEn, key) in weekdayList" :key="key">{{ weekJp }}曜日</option>
+        </select>
       </template>
-    </fieldset>
+    </template>
+  </fieldset>
 </form>
 </template>
 
@@ -54,25 +53,15 @@ export default {
   data () {
     return {
       unitRepetitionList: [ '毎日', '毎週', '毎月' ],
-      weekdayList: {
-        sunday: '日',
-        monday: '月',
-        tuesday: '火',
-        wednesday: '水',
-        thursday: '木',
-        friday: '金',
-        saturday: '土'
-      },
+      weekdayList: [ '日', '月', '火', '水', '木', '金', '土' ],
       pBankColorList: ['pink', 'blue', 'green'],
-      monthRepetitionList: {
-        day: '日',
-        week: '曜日'
-      },
+      monthRepetitionList: [ '日', '曜日' ],
       colors: 'pink',
+      weekdays: '月',
       target_saved: '100000',
       saved_name: '電子レンジ',
       unitRepetition: '毎日',
-      month_repetiton: '日'
+      monthRepetiton: '日'
     }
   },
   mounted: function () {
