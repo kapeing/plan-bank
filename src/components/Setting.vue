@@ -9,11 +9,11 @@
   </fieldset>
   <fieldset>
     <label for="target_saved">目標金額</label>
-    <input type="number" id="target_saved" v-model="target_saved">
+    <input type="number" id="target_saved" v-model="targetSaved">
   </fieldset>
   <fieldset>
     <label for="saved_name">貯金名</label>
-    <input type="text" id="saved_name" v-model="saved_name">
+    <input type="text" id="saved_name" v-model="savedName">
   </fieldset>
   <fieldset>
     <label for="unit_repetition">繰り返しの単位</label>
@@ -43,11 +43,16 @@
         </select>
       </template>
     </template>
+    <button @click="addData">Click</button>
   </fieldset>
 </form>
 </template>
 
 <script>
+const axios = require('axios')
+
+let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/parson'
+
 export default {
   id: 'setting',
   data () {
@@ -58,21 +63,43 @@ export default {
       monthRepetitionList: [ '日', '曜日' ],
       colors: 'pink',
       weekdays: '月',
-      target_saved: '100000',
-      saved_name: '電子レンジ',
+      targetSaved: '100000',
+      savedName: '電子レンジ',
       unitRepetition: '毎日',
-      monthRepetiton: '日'
+      monthRepetiton: '日',
+      json_data: {}
     }
   },
-  mounted: function () {
+  created: function () {
+    this.getData()
   },
   methods: {
-    // radioButtonChecked (key) {
-    //   return key === 0 ? 'checked' : ''
-    // },
-    // selectBoxSelected (wishUnitJp, unitJp) {
-    //   return wishUnitJp === unitJp ? 'selected' : ''
-    // }
+    addData () {
+      let addUrl = url + '/' + this.savedName + '.json'
+      let data = {
+        'colors': this.colors,
+        'weekdays': this.weekdays,
+        'targetSaved': this.targetSaved,
+        'unitRepetition': this.unitRepetition,
+        'monthRepetiton': this.monthRepetiton
+      }
+      axios.put(addUrl, data).then((re) => {
+        this.savedName = ''
+        this.colors = ''
+        this.weekdays = ''
+        this.targetSaved = ''
+        this.unitRepetition = ''
+        this.monthRepetiton = ''
+        this.getData()
+      })
+    },
+    getData () {
+      axios.get(url + '.json').then((res) => {
+        hogehoge
+      }).catch((error => {
+        errorerror
+      }))
+    }
   }
 }
 </script>
