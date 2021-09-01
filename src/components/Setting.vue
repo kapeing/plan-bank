@@ -87,21 +87,17 @@ export default {
         monthRepetiton: this.monthRepetiton,
         oneTimeSaved: this.oneTimeSaved
       }
-      axios.put(addUrl, data).then(re => {
-        this.colors = ''
-        this.weekdays = ''
-        this.targetSaved = 0
-        this.savedName = ''
-        this.unitRepetition = ''
-        this.monthRepetiton = ''
-        this.oneTimeSaved = 0
-        this.getData()
+      axios.post(addUrl, data).then(re => {
+        console.log(re)
       })
     },
     getData: function () {
       axios.get(url + '.json').then(res => {
         this.json_data = res.data
-        console.log(this.json_data)
+      }).catch(err => {
+        if (err.response) {
+          console.log(err)
+        }
       })
     }
   },
