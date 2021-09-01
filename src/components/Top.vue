@@ -5,9 +5,10 @@
         <span class="graph" :style="{height: heights[key]}"></span>
         <div class="bank_box">
           <span class="curent_saved">{{ item.currentSaved }}</span>
-          <span>/{{ item.targetSaved }}</span>
+          <span>/{{ json_data.targetSaved }}</span>
           <span>P-BANK</span>
         </div>
+        <p style="color: #fff;">{{ json_data.savedName }} のために {{json_data.oneTimeSaved }}円ずつ貯金！！</p>
       </li>
     </ul>
     <div class="withdrawal">
@@ -24,6 +25,9 @@
 
 <script>
 const TARGET_SAVED_HEIGHT = 250
+const axios = require('axios')
+
+let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank/'
 
 export default {
   name: 'Top',
@@ -46,7 +50,9 @@ export default {
           class: 'green'
         }
       ],
-      heights: []
+      heights: [],
+      json_data: {},
+      savedName: ''
     }
   },
   mounted: function () {
@@ -59,7 +65,16 @@ export default {
   methods: {
     graphHeight (currentSaved, targetSaved) {
       return (currentSaved * TARGET_SAVED_HEIGHT / targetSaved) + 'px'
+    },
+    getData: function () {
+      let idUrl = url + 1 + '.json'
+      axios.get(idUrl).then((res) => {
+        this.json_data = res.data
+      })
     }
+  },
+  created: function () {
+    this.getData()
   }
 }
 </script>
@@ -68,7 +83,7 @@ export default {
 <style scoped lang="scss">
 .bank_area {
   width: 800px;
-  height: 300px;
+  height: 330px;
   margin: 0 auto;
   padding-top: 20px;
   border-radius: 50px;
