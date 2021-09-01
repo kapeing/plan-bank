@@ -53,7 +53,7 @@
 </template>
 
 <script>
-const axios = require('axios')
+import axios from 'axios'
 
 let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
 
@@ -88,7 +88,13 @@ export default {
         oneTimeSaved: this.oneTimeSaved
       }
       axios.post(addUrl, data).then(re => {
-        console.log(re)
+        this.colors = ''
+        this.weekdays = ''
+        this.targetSaved = 0
+        this.savedName = ''
+        this.unitRepetition = ''
+        this.monthRepetiton = ''
+        this.oneTimeSaved = 0
       })
     },
     getData: function () {
