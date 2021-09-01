@@ -43,15 +43,19 @@
         </select>
       </template>
     </template>
-    <button @click="addData">Click</button>
   </fieldset>
+  <fieldset>
+    <label for="one_time_saved">1回の貯金額</label>
+    <input type="number" id="one_time_saved" v-model="oneTimeSaved">
+  </fieldset>
+  <button @click="addData">Click</button>
 </form>
 </template>
 
 <script>
 const axios = require('axios')
 
-let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/parson'
+let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
 
 export default {
   id: 'setting',
@@ -61,45 +65,48 @@ export default {
       weekdayList: [ '日', '月', '火', '水', '木', '金', '土' ],
       pBankColorList: ['pink', 'blue', 'green'],
       monthRepetitionList: [ '日', '曜日' ],
-      colors: 'pink',
-      weekdays: '月',
-      targetSaved: '100000',
-      savedName: '電子レンジ',
-      unitRepetition: '毎日',
-      monthRepetiton: '日',
+      colors: '',
+      weekdays: '',
+      targetSaved: 0,
+      savedName: '',
+      unitRepetition: '',
+      monthRepetiton: '',
+      oneTimeSaved: 0,
       json_data: {}
+    }
+  },
+  methods: {
+    addData: function () {
+      let addUrl = url + '/' + 16 + '.json'
+      let data = {
+        colors: this.colors,
+        weekdays: this.weekdays,
+        targetSaved: this.targetSaved,
+        savedName: this.savedName,
+        unitRepetition: this.unitRepetition,
+        monthRepetiton: this.monthRepetiton,
+        oneTimeSaved: this.oneTimeSaved
+      }
+      axios.put(addUrl, data).then(re => {
+        this.colors = ''
+        this.weekdays = ''
+        this.targetSaved = 0
+        this.savedName = ''
+        this.unitRepetition = ''
+        this.monthRepetiton = ''
+        this.oneTimeSaved = 0
+        this.getData()
+      })
+    },
+    getData: function () {
+      axios.get(url + '.json').then(res => {
+        this.json_data = res.data
+        console.log(this.json_data)
+      })
     }
   },
   created: function () {
     this.getData()
-  },
-  methods: {
-    addData () {
-      let addUrl = url + '/' + this.savedName + '.json'
-      let data = {
-        'colors': this.colors,
-        'weekdays': this.weekdays,
-        'targetSaved': this.targetSaved,
-        'unitRepetition': this.unitRepetition,
-        'monthRepetiton': this.monthRepetiton
-      }
-      axios.put(addUrl, data).then((re) => {
-        this.savedName = ''
-        this.colors = ''
-        this.weekdays = ''
-        this.targetSaved = ''
-        this.unitRepetition = ''
-        this.monthRepetiton = ''
-        this.getData()
-      })
-    },
-    getData () {
-      axios.get(url + '.json').then((res) => {
-        hogehoge
-      }).catch((error => {
-        errorerror
-      }))
-    }
   }
 }
 </script>
